@@ -1,0 +1,9 @@
+bs4
+feedgen
+Jinja2
+libsass
+lxml
+Markdown
+Pillow
+PyYAML
+rcssmin

@@ -1,0 +1,135 @@
+{% extends "base.html" %} {% set page_class = 'article' %} {% block content %}
+
+<article class="article">
+  {# title #}
+  <h1 class="article__title">{{ article['title'] }}</h1>
+  {# parent #}
+  {% if article['has_parent'] %}
+    <p class="article__parent">
+      This article is part of:
+      <a href="{{ article['parent_url'] }}">{{ article['parent'] }}</a>.
+    </p>
+  {% endif %}
+  {# tags #}
+  {% if article['tags'] %}
+    <p class="article__tags">Tags:
+      {% for tag in article['tags'] %}
+      <a href="tag-{{ tag }}.html" class="tag__link">#{{ tag }}</a>
+      {% endfor %}
+    </p>
+  {% endif %}
+  {# featured image #}
+  {% if article['featured_image'] %}
+    <img src="{{ article['featured_image'] }}" alt="" class="article__featured">
+  {% endif %}
+  {# childs #}
+  {% if not article['open'] %}
+    {% if article['childs_slug']|length > 0 %}
+      <section class="index index--list">
+        <ul class="index__list">
+          {% for article in article['childs_slug'] %}
+            {% set slug = articles[article]['slug'] %}
+            {% set article = articles[article] %}
+            <li class="index__item">
+              {% include "components/index_item_content.html" %}
+              {% with %}{% set childs_slug = articles[slug]['childs_slug'] %}
+              {% include "components/childs_list.html" %}
+              {% endwith %}
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+  {% endif %}
+  {% if article['open'] %}
+    {# toc #}
+    {% if (article['toc']) or (article['childs'])%}
+    <section class="article__toc">
+      <h2 class="toc__title">Table of content</h2>
+      <h3 class="toc__title--sub"><a href="{{ article['slug'] }}.html#content">{{ article['title']}}</h3>
+      {% if article['toc'] %}
+        <div class="toc__list">{{ article['toc'] }}</div>
+      {% endif %}
+      {% if article['childs'] %}
+        {% for child in article['childs_slug'] %}
+          {% set article_child = articles[child] %}
+          <h3 class="toc__title--sub"><a href="{{ article['slug'] }}.html#{{ article_child['slug'] }}">{{ article_child['title'] }}</a></h3>
+          {% if article_child['toc'] %}
+            <div class="toc__list--sub">{{ article_child['toc'] }}</div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </section>
+    {% endif %}
+  {% endif %}
+  {# content #}
+  <section id="content" class="article__content ts">
+    {{ article['content'] }}
+  </section>
+  <footer>
+    <p>✎ <span>Created</span> {{ article['publication_date'] }}</p>
+    <p>⁂ <span>Updated</span> {{ article['last_update'] }}</p>
+  </footer>
+  {# backlinks #}
+  {% if article['backlinks_from'] %}
+    <section class="article__backlinks ts">
+      <h2>Backlinks from</h2>
+      <ul>
+        {% for backlink in article['backlinks_from'] %}
+          <li><a href="{{ backlink}}.html">{{ backlink }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+  {# childs #}
+  {% if article['childs'] %}
+    {% for child in article['childs_slug'] %}
+      {% set article_child = articles[child] %}
+      <article class="article--sub" id="{{ article_child['slug'] }}">
+        {# title #}
+        <h1 class="article__title">{{ article_child['title'] }} <a href="{{ article_child['slug'] }}.html">●</a></h1>
+        {# tags #}
+        {% if article_child['tags'] %}
+          <p class="article__tags">Tags:
+            {% for tag in article_child['tags'] %}
+              <a href="tag-{{ tag }}.html" class="tag__link">#{{ tag }}</a>
+            {% endfor %}
+          </p>
+        {% endif %}
+        {# featured image #}
+        {% if article_child['featured_image'] %}
+          <img src="{{ article_child['featured_image'] }}" alt="{{ article_child['title'] }}" class="article__featured">
+        {% endif %}
+        {# content #}
+        <section class="article__content ts">
+          {{ article_child['content'] }}
+        </section>
+        {# childs #}
+        {% if article_child['childs'] %}
+          <section class="index index--list">
+            <ul class="index__list">
+              {% for child in article_child['childs_slug'] %}
+                {% set slug = articles[child]['slug'] %}
+                {% set article = articles[child] %}
+                <li class="index__item">
+                  {% include "components/index_item_content.html" %}
+                  {% with %}{% set childs_slug = articles[slug]['childs_slug'] %}
+                  {% include "components/childs_list.html" %}
+                  {% endwith %}
+                </li>
+              {% endfor %}
+            </ul>
+          </section>
+        {% endif %}
+        {# footer #}
+         <footer>
+          <p>✎ <span>Created</span> {{ article_child['publication_date'] }}</p>
+          <p>⁂ <span>Updated</span> {{ article_child['last_update'] }}</p>
+        </footer>
+      </article>
+    {% endfor %}
+  {% endif %}
+
+</article>
+
+{% endblock %}

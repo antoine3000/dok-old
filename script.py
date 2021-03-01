@@ -14,7 +14,7 @@ import sass
 CONTENT_DIR = 'content'
 PUBLIC_DIR = 'public'
 MEDIAS_DIR = 'public/medias'
-ENV_DIR = Environment(loader=FileSystemLoader('__DOK/templates'))
+ENV_DIR = Environment(loader=FileSystemLoader('dok/templates'))
 IMG_MAX_WIDTH = 1400
 
 
@@ -28,6 +28,7 @@ def line():
 
 
 # Message
+print('')
 line()
 print('DOK')
 line()
@@ -42,12 +43,12 @@ settings_file = 'settings.yml'
 
 # Default settings
 try:
-    with open('__DOK/' + settings_file, 'r') as file:
+    with open('dok/' + settings_file, 'r') as file:
         settings = yaml.load(file, Loader=yaml.FullLoader)
 except:
     print('Settings file is missing.')
-    print('Please go back to the Gitlab repository, take the default `settings.yml` file and put it back in the `__DOK` folder.')
     line()
+    print('')
     sys.exit()
 
 # User settings
@@ -288,6 +289,8 @@ try:
     content = os.listdir(CONTENT_DIR)
 except FileNotFoundError:
     print('There is no content')
+    line()
+    print('')
     sys.exit()
 
 # Loop through every folder in content and add the objects to a list
@@ -401,10 +404,16 @@ print(':: Tag pages — created (' + str(tags_sum) + ')')
 # Assets
 # ------------------------------------------------
 
-SCSS_FILE = "assets/css/main.scss"
+
+
+if not os.path.exists('assets'):
+    SCSS_FILE = "dok/assets/css/main.scss"
+else:
+   SCSS_FILE = "assets/css/main.scss"
+
 SCSS_MAP = {SCSS_FILE: "public/assets/main.css"}
 CSS_MAP = {"public/assets/main.css": "public/assets/main.min.css"}
-FONTS_PATH_DOK = '__DOK/assets/fonts/'
+FONTS_PATH_DOK = 'dok/assets/fonts/'
 FONTS_PATH_USER = 'assets/fonts/'
 FONTS_PUBLIC = 'public/assets/fonts/'
 
@@ -453,4 +462,7 @@ if os.path.isfile(SCSS_FILE):
 line()
 pages_sum = pages_sum + articles_sum + tags_sum
 print(':: Dok has ' + str(pages_sum) + ' pages')
+line()
+print('Copy/paste this path in your web browser to visit your freshly generated website:')
+print(os.path.abspath('public/index.html'))
 line()

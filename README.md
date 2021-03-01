@@ -1,16 +1,36 @@
 # Dok
 
-Dok is a documentation tool/system that converts an architecture of folders and files into a static website that anyone can explore. It can be seen as a personal assistant, it invites you to write, organize and then publish your personal knowledge online.
+Dok is a documentation low-tech tool/system that helps you to document (almost) everything. It can be seen as a personal assistant, it invites you to write, organize and then publish your personal knowledge online.
 
 ## Status
 
 Dok is currently in full development. Things will be broken, then repaired, then broken again. To use it is to accept its experimental phase.
 
 ## Quick start
+
+### Installation
+
+#### Python and PIP
+
+Dok requires [Python](https://en.wikipedia.org/wiki/Python_(programming_language)). You can download it from the [official Python website](https://www.python.org/downloads/), for Linux, Mac OS X or Windows.
+
+PIP, the package manager for Python, is also required to run Dok. The Python installer installs `pip`, so it should be ready for you to use. You can verify that `pip` is available by running the following command in your console: `pip --version`. It should give informations on the current version of pip, if it is correctly installed.
+
+#### Dependencies
+
+In order to install the dependencies:
+1. Open a terminal and make sure you are inside the `dok` folder: `cd my_project/dok`
+2. run `pip install -r requirements.txt`
+
 ### Create a project
 ### Create an article
 ### Generate your site
+
+Run `python dok/script.py`.
+
 ### Preview your site
+
+Open your web browser and visit the URL provided by the script when you run it. On linux, this looks like `file:///home/antoine/repo/my-project/public/index.html`.
 
 ## Write
 ### Metadata
