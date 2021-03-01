@@ -6,16 +6,18 @@ Dok is a documentation tool/system that helps you to document (almost) everythin
 
 ## Status
 
-Dok is currently in full development. Things will be broken, then repaired, then broken again. To use it is to accept its experimental phase.
+Dok is currently in full development. Things will be broken, then repaired, then broken again.
+
+To use it is to accept its experimental phase.
 
 ## Installation
 
 ### Project structure
 
-Clone this repository inside your project folder. In addition to this repository, you will have a content folder, where you have your own folders, markdown files, media files, etc. and an automatically generated public folder.
+Clone this repository into your project folder. In addition to this repository, you will have a content folder, where you will have your own folders, markdown files, media files, etc. and an automatically generated public folder.
 
 ```
-my-project                  # your project folder
+my-dok                      # your project folder
 ├── dok                     # this repository (inside your project folder)
 │   ├── requirements.txt    # python dependencies
 │   ├── script.py           # dok script
@@ -49,7 +51,26 @@ In order to install the dependencies:
 ## Quickstart
 
 ### Create a project
+
+Create a new folder somewhere on your computer, let's say in a 'repo' folder where you have all your git repositories:
+
+`cd repo && mkdir my-dok && cd my-dok`
+
+Once, you have your main folder, `git clone` this repository into it.
+
+`git clone git@github.com:antoinestudio/dok.git`
+
 ### Create an article
+
+Create a new folder, into the `content` folder. Note that if this is your first article, you may need to create the content folder.
+
+A folder name is composed by two elements: `creation_date-article_slug`. A slug is a short name given to an article to will be used to identify it, and later to create its URL.
+
+Inside that folder, create a file named `_index.md` in which you will write your article.
+
+For example: `2021-03-01-about`, where `2021-03-01` is today's date and `about` the slug of my article.
+
+
 ### Generate your site
 
 Run `python dok/script.py`.
