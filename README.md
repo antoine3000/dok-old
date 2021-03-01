@@ -2,6 +2,8 @@
 
 Dok is a documentation low-tech tool/system that helps you to document (almost) everything. It can be seen as a personal assistant, it invites you to write, organize and then publish your personal knowledge online.
 
+![dok-system](dok-system.jpg)
+
 ## Status
 
 Dok is currently in full development. Things will be broken, then repaired, then broken again. To use it is to accept its experimental phase.
