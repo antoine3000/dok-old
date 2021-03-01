@@ -22,6 +22,7 @@ my-project                  # your project folder
 ├── content                 # your content
 │   ├── 2021-01-01-about    # an article folder         
 │       ├── _index.md       # an article content file
+│   └── ...
 ├── assets                  # your own assets that overwrite the main ones
 │   ├── css
 │       ├── style.scss      # your own scss styles
