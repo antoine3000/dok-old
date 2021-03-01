@@ -40,13 +40,19 @@ my-dok                      # your project folder
 
 Dok requires [Python](https://en.wikipedia.org/wiki/Python_(programming_language)). You can download it from the [official Python website](https://www.python.org/downloads/), for Linux, Mac OS X or Windows.
 
-PIP, the package manager for Python, is also required to run Dok. The Python installer installs `pip`, so it should be ready for you to use. You can verify that `pip` is available by running the following command in your console: `pip --version`. It should give you information about the current pip version, if it is correctly installed.
+PIP, the package manager for Python, is also required to run Dok. The Python installer installs `pip`, so it should be ready for you to use. You can verify that `pip` is available by running the following command in your console: `$ pip --version`. It should give you information about the current pip version, if it is correctly installed.
 
 ### Dependencies
 
-In order to install the dependencies:
-1. Open a terminal and make sure you are inside the `dok` folder: `cd my_project/dok`
-2. run `pip install -r requirements.txt`
+In order to install the dependencies, open a terminal and make sure you are inside the `dok` folder:
+
+```
+$ cd my_project/dok
+```
+And run:
+```
+$ pip install -r requirements.txt
+```
 
 ## Quickstart
 
@@ -54,11 +60,17 @@ In order to install the dependencies:
 
 Create a new folder somewhere on your computer, let's say in a 'repo' folder where you have all your git repositories:
 
-`cd repo && mkdir my-dok && cd my-dok`
+```
+$ cd repo
+$ mkdir my-dok
+$ cd my-dok
+```
 
-Once, you have your main folder, `git clone` this repository into it.
+Once you have created your main folder, `git clone` this repository into it.
 
-`git clone git@github.com:antoinestudio/dok.git`
+```
+$ git clone git@github.com:antoinestudio/dok.git
+```
 
 ### Create an article
 
@@ -73,7 +85,11 @@ For example: `2021-03-01-about`, where `2021-03-01` is today's date and `about` 
 
 ### Generate your site
 
-Run `python dok/script.py`.
+From the main project folder:
+
+```
+$ python dok/script.py
+```
 
 ### Preview your site
 
