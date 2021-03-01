@@ -74,13 +74,18 @@ $ git clone git@github.com:antoinestudio/dok.git
 
 ### Create an article
 
-Create a new folder, into the `content` folder. Note that if this is your first article, you may need to create the content folder.
+
+Create a new folder in the `content` folder. Note that if this is your first article, you may need to create the content folder.
 
 A folder name is composed by two elements: `creation_date-article_slug`. A slug is a short name given to an article to will be used to identify it, and later to create its URL.
 
-Inside that folder, create a file named `_index.md` in which you will write your article.
+The name of a folder is composed of two elements: `creation_date-article_slug`.
 
-For example: `2021-03-01-about`, where `2021-03-01` is today's date and `about` the slug of my article.
+A slug is a short name given to an article that will be used to identify it, and later to create its URL.
+
+Inside this folder, create a file named `_index.md` in which you will write your article.
+
+For example: `2021-03-01-about`, where `2021-03-01` is today's date and `about` is the slug of my article.
 
 
 ### Generate your site
