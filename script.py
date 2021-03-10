@@ -308,9 +308,11 @@ for current, childs, files in os.walk(CONTENT_DIR):
             media_path = MEDIAS_DIR + '/' + item_slug + '-' + file
             media_process(item_path, media_path)
 
-# Introduction converted to markdown
-introduction_md = markdown.markdown(settings['introduction'])
-settings['introduction'] = convert_links(introduction_md)
+# Convert some settings to markdown
+settings_to_markdown = ['introduction', 'footer']
+for setting in settings_to_markdown:
+    setting_md = markdown.markdown(settings[setting])
+    settings[setting] = convert_links(setting_md)
 
 
 # ------------------------------------------------
