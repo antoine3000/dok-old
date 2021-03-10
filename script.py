@@ -44,7 +44,7 @@ settings_file = 'settings.yml'
 # Default settings
 try:
     with open('dok/' + settings_file, 'r') as file:
-        settings = yaml.load(file, Loader=yaml.FullLoader)
+        settings = yaml.load(file, Loader=yaml.SafeLoader)
 except:
     print('Settings file is missing.')
     line()
@@ -54,7 +54,7 @@ except:
 # User settings
 if os.path.isfile(settings_file):
     with open(settings_file, 'r') as file:
-        settings_user = yaml.load(file, Loader=yaml.FullLoader)
+        settings_user = yaml.load(file, Loader=yaml.SafeLoader)
 
 settings.update(settings_user)
 
