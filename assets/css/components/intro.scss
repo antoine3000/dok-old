@@ -3,7 +3,6 @@
 .intro {
   margin-bottom: var(--size-xl);
   @extend %container-padding;
-  max-width: calc(var(--content-max-width) * 2);
   p {
     @extend %ts-title-0;
   }
