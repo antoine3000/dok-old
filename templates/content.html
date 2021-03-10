@@ -1,24 +1,5 @@
 {% extends "base.html" %} {% set page_class = 'content' %} {% block content %}
 
-<section class="index index--list">
-<h1 class="index__title">Articles</h1>
-<ul class="index__list">
-
-{% for article in articles if not articles[article]['has_parent'] %}
-  {% set slug = articles[article]['slug'] %}
-  {% set article = articles[article] %}
-  <li class="index__item">
-    {% include 'components/index_item_content.html' %}
-    {% if articles[slug]['open'] %}
-      {% with %}
-        {% set childs_slug = articles[slug]['childs_slug'] %}
-        {% include "components/childs_list.html" %}
-      {% endwith %}
-    {% endif %}
-  </li>
-  {% endfor %}
-</ul>
-</section>
 
 <section class="index index--list">
   <h1 class="index__title">Content</h2>

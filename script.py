@@ -52,11 +52,11 @@ except:
     sys.exit()
 
 # User settings
-    if os.path.isfile(settings_file):
-        with open(settings_file, 'r') as file:
-            settings_user = yaml.load(file, Loader=yaml.FullLoader)
+if os.path.isfile(settings_file):
+    with open(settings_file, 'r') as file:
+        settings_user = yaml.load(file, Loader=yaml.FullLoader)
 
-    settings.update(settings_user)
+settings.update(settings_user)
 
 
 # ------------------------------------------------
