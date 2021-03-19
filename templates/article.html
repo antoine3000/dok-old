@@ -1,6 +1,8 @@
 {% extends "base.html" %} {% set page_class = 'article' %} {% block content %}
 
-<article class="article">
+{% set open = article['open'] | string() %}
+
+<article class="article" id="{{ article['slug'] }}">
   {# title #}
   <h1 class="article__title">{{ article['title'] }}</h1>
   {# parent #}
@@ -18,42 +20,40 @@
       {% endfor %}
     </p>
   {% endif %}
+
   {# featured image #}
   {% if article['featured_image'] %}
     <img src="{{ article['featured_image'] }}" alt="" class="article__featured">
   {% endif %}
   {# childs #}
-  {% if not article['open'] %}
-    {% if article['childs_slug']|length > 0 %}
-      <section class="index index--list">
-        <ul class="index__list">
-          {% for article in article['childs_slug'] %}
-            {% set slug = articles[article]['slug'] %}
-            {% set article = articles[article] %}
-            <li class="index__item">
-              {% include "components/index_item_content.html" %}
-              {% with %}{% set childs_slug = articles[slug]['childs_slug'] %}
-              {% include "components/childs_list.html" %}
-              {% endwith %}
-            </li>
-          {% endfor %}
-        </ul>
-      </section>
-    {% endif %}
+  {% if (open == 'False') and (article['childs_slug']|length > 0) %}
+    <section class="index index--list">
+      <ul class="index__list">
+        {% for article in article['childs_slug'] %}
+          {% set slug = articles[article]['slug'] %}
+          {% set article = articles[article] %}
+          <li class="index__item">
+            {% include "components/index_item_content.html" %}
+            {% with %}{% set childs_slug = articles[slug]['childs_slug'] %}
+            {% include "components/childs_list.html" %}
+            {% endwith %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
   {% endif %}
-  {% if article['open'] %}
+  {% if open == 'True' %}
     {# toc #}
     {% if (article['toc']) or (article['childs'])%}
     <section class="article__toc">
-      <h2 class="toc__title">Table of content</h2>
-      <h3 class="toc__title--sub"><a href="{{ article['slug'] }}.html#content">{{ article['title']}}</h3>
+      <h3 class="toc__title--sub"><a href="{{ article['slug'] }}.html#content">{{ article['title']}}&nbsp;↓</h3>
       {% if article['toc'] %}
         <div class="toc__list">{{ article['toc'] }}</div>
       {% endif %}
       {% if article['childs'] %}
         {% for child in article['childs_slug'] %}
           {% set article_child = articles[child] %}
-          <h3 class="toc__title--sub"><a href="{{ article['slug'] }}.html#{{ article_child['slug'] }}">{{ article_child['title'] }}</a></h3>
+          <h3 class="toc__title--sub"><a href="{{ article['slug'] }}.html#{{ article_child['slug'] }}">{{ article_child['title'] }}&nbsp;↓</a></h3>
           {% if article_child['toc'] %}
             <div class="toc__list--sub">{{ article_child['toc'] }}</div>
           {% endif %}
@@ -82,12 +82,12 @@
     </section>
   {% endif %}
   {# childs #}
-  {% if article['childs'] %}
+  {% if (open == 'True') and (article['childs']) %}
     {% for child in article['childs_slug'] %}
       {% set article_child = articles[child] %}
       <article class="article--sub" id="{{ article_child['slug'] }}">
         {# title #}
-        <h1 class="article__title">{{ article_child['title'] }} <a href="{{ article_child['slug'] }}.html">●</a></h1>
+        <h1 class="article__title">{{ article_child['title'] }}&nbsp;<a href="{{ article_child['slug'] }}.html">➹</a></h1>
         {# tags #}
         {% if article_child['tags'] %}
           <p class="article__tags">Tags:

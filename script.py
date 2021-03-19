@@ -96,6 +96,7 @@ class Article:
             'publication_date': self.publication_date,
             'last_update': self.last_update,
             'open': self.open,
+            'reverse_order': self.reverse_order,
             'has_parent': self.has_parent,
             'backlinks_to': self.backlinks_to,
             'backlinks_from': self.backlinks_from
@@ -153,9 +154,13 @@ class Article:
         except KeyError:
             self.title = self.slug
         try:
-            self.open = metadata['open'][0]
+            self.open = eval(metadata['open'][0])
         except KeyError:
             self.open = False
+        try:
+            self.reverse_order = eval(metadata['reverse_order'][0])
+        except KeyError:
+            self.reverse_order = False
         try:
             self.last_update = datetime.strptime(metadata['last_update'][0], '%Y-%m-%d').strftime('%d/%m/%Y')
         except KeyError:
@@ -260,7 +265,7 @@ def html_update(html, slug):
         img_tag.append(caption)
         img_tag['loading'] = 'lazy'
         fig_tag = soup.new_tag("figure")
-        img_tag['src'] = 'medias/' + slug + '-' + img_tag['src']
+        img_tag['src'] = 'medias/' + article_slug + '-' + img_tag['src']
         img_src = img_tag['src']
         if "large:" in img_src:
             fig_tag['class'] = 'lg'
@@ -271,6 +276,11 @@ def html_update(html, slug):
         else:
             fig_tag['class'] = 'md'
         wrap(img_tag, fig_tag)
+    # sub article figure
+    for article_sub in soup.findAll(class_='article--sub'):
+        article_sub_id = article_sub.get('id')
+        for img_tag in article_sub.findAll('img'):
+            img_tag['src'] = img_tag['src'].replace(slug, article_sub_id)
     # links with no class = external
     for content in soup.findAll('section', {'class': 'article__content'}):
         for link in content.findAll('a', {'class': None}):
@@ -322,14 +332,18 @@ for setting in settings_to_markdown:
 articles = {}
 tags = {}
 
-
 # Reorder main articles list
 sorted_articles_list = sorted(articles_list, key=lambda x: x.name)
 
 for article in sorted_articles_list:
     # Reorder childs slug list
     if article.childs:
-        article.childs_slug.sort()
+        article.childs.sort(reverse=article.reverse_order)
+        childs_slug_ordered = []
+        for child in article.childs:
+            childs_slug_ordered.append(slugify(child))
+        article.childs_slug = childs_slug_ordered
+
     # Get backlinks from
     article.get_backlinks_from()
     # Create a dictionary from the previously generated list so that it can be accessed from anywhere
